@@ -9,16 +9,13 @@ class SeagullCommand(ClientPlugin):
 
 	@CommandHandler('seagull', 0)
 	def seagull(self, msg, openchar='{', closechar='}', *args):
-		if openchar == closechar:
-			self.reply(msg, "Can't make a flock out of only one character")
-			return
-		out = openchar
+		out = []
 		depth = 1
 		while depth:
-			c = openchar if random.random() * 20 > len(out) else closechar
-			if c == openchar:
+			if random.random() * 20 > len(out):
+				out.append(openchar)
 				depth += 1
 			else:
+				out.append(closechar)
 				depth -= 1
-			out += c
-		self.reply(msg, out)
+		self.reply(msg, "".join(out))
